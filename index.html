@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>GitHub Repositories</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+      }
+      h1 {
+        background-color: #333;
+        color: #fff;
+        padding: 1rem;
+      }
+      .container {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        margin: 2rem;
+      }
+      .card {
+        background-color: #f1f1f1;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        margin: 1rem;
+        padding: 1rem;
+        width: 300px;
+      }
+      .card h2 {
+        margin: 0;
+      }
+      .card p {
+        margin: 0.5rem 0;
+      }
+      .card a {
+        color: #007bff;
+        text-decoration: none;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Amartya Chakraborty's GitHub Repositories</h1>
+    <div class="container"></div>
+    <script>
+      const username = 'johnpapa';
+      const container = document.querySelector('.container');
+
+      fetch(`https://api.github.com/users/${username}/repos`)
+        .then((response) => response.json())
+        .then((data) => {
+          data.forEach((repo) => {
+            const card = document.createElement('div');
+            card.classList.add('card');
+            card.innerHTML = `
+              <h2>${repo.name}</h2>
+              <p>${repo.description || ''}</p>
+              <a href="${repo.html_url}" target="_blank">View Repository</a>
+            `;
+            container.appendChild(card);
+          });
+        })
+        .catch((error) => {
+          console.error(error);
+        });
+    </script>
+  </body>
+</html>
